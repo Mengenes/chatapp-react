@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosBaseurl from "../../configs/axios/AxiosBaseurl";
-import { useEffect, useState, useMemo, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useAuthStore } from "../../Store/authStore";
@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import { ScrollArea } from "../ui/scroll-area";
 import ChatSkeleton from "./ChatSkeleton";
 import { socket } from "../../socket";
+import { toast } from "sonner";
 
 type PresenceUpdate = {
   userId: string;
@@ -47,6 +48,12 @@ function FetchMessages() {
   const setUsers = useAuthStore((state) => state.setUsers);
   const updateUserStatus = useAuthStore((state) => state.updateUserStatus);
 
+  const storeUsersRef = useRef<UserData[]>([]);
+
+  useEffect(() => {
+    storeUsersRef.current = storeUsers;
+  }, [storeUsers]);
+
   const [message, setMessage] = useState("");
 
   const { data: messages = [], isLoading } = useQuery<MessageData[]>({
@@ -76,7 +83,15 @@ function FetchMessages() {
   });
 
   useEffect(() => {
-    if (usersData.length > 0) setUsers(usersData);
+    if (usersData.length === 0) return;
+    const merged = usersData.map((u) => {
+      const existing = storeUsersRef.current.find((s) => s.id === u.id);
+      return existing ? { ...u, isOnline: existing.isOnline } : u;
+    });
+    const socketOnlyUsers = storeUsersRef.current.filter(
+      (s) => !usersData.some((u) => u.id === s.id)
+    );
+    setUsers([...merged, ...socketOnlyUsers]);
   }, [usersData, setUsers]);
 
   useEffect(() => {
@@ -95,6 +110,20 @@ function FetchMessages() {
 
     const handlePresence = (data: PresenceUpdate) => {
       updateUserStatus(data.userId, data.username, data.isOnline);
+      queryClient.setQueryData<UserData[]>(["users"], (old = []) => {
+        const exists = old.some((u) => String(u.id) === String(data.userId));
+        if (!exists) {
+          return [
+            ...old,
+            { id: data.userId, username: data.username, email: "", role: "user", isOnline: data.isOnline },
+          ];
+        }
+        return old.map((u) =>
+          String(u.id) === String(data.userId)
+            ? { ...u, username: data.username, isOnline: data.isOnline }
+            : u
+        );
+      });
     };
 
     socket.on("chat_message", handleMessage);
@@ -111,7 +140,11 @@ function FetchMessages() {
   const trimmed = useMemo(() => message.trim(), [message]);
 
   const sendMessage = useCallback(() => {
-    if (!user || !trimmed) return;
+    if (!trimmed) return;
+    if (!user) {
+      toast.error("Please login to send messages");
+      return;
+    }
     socket.emit("chat_message", { message: trimmed });
     setMessage("");
   }, [user, trimmed]);

@@ -171,7 +171,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
   const resetLink = `${clientUrl}/reset-password/${rawToken}`;
 
   await resend.emails.send({
-    from: "Chat App <onboarding@resend.dev>",
+    from: "MyChat App <onboarding@resend.dev>",
     to: email,
     subject: "Reset Your Password Link - Valid for 15 minutes",
     html: `
