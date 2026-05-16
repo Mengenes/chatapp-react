@@ -11,16 +11,17 @@ import userRouter from "./routes/user.ts";
 
 
 const app = express();
+app.use(cors({
+  origin: process.env.CLIENT_URL,
+  credentials: true,
+}));
 app.use(cookieParser());
 const PORT = process.env.PORT || 5169;
 
 const server = http.createServer(app);
 initSocket(server);
 
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true,
-}));
+
 
 app.use(express.json());
 

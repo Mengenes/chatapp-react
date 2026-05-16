@@ -15,11 +15,11 @@ export interface DbUser {
   password: string;
   role: "user" | "admin";
 }
-
+const isProd = process.env.NODE_ENV === "production";
 const cookieOptions:CookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  secure: isProd,
+  sameSite: isProd ? "none" : "strict",
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
