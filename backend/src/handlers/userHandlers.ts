@@ -2,7 +2,8 @@ import type { Request, Response } from "express";
 import { pool } from "../configs/db.ts";
 import bcrypt from "bcrypt";
 
-export const getMe = async (req: Request, res: Response) => {
+
+export const getMe = async (req: Request, res:Response) => {
   try {
     if (!req.user) {
       return res.status(401).json({ message: "Unauthorized" });
@@ -19,7 +20,7 @@ export const getMe = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUsername = async (req: Request, res: Response) => {
+export const updateUsername = async (req:Request, res: Response) => {
   const userId = req.user?.id;
   const { newUsername } = req.body;
 

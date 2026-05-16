@@ -1,10 +1,12 @@
-import type { Request, Response } from "express";
-import jwt, { type JwtPayload } from "jsonwebtoken";
+
+import jwt from "jsonwebtoken";
+import type { JwtPayload } from "jsonwebtoken";
 import { pool } from "../configs/db.ts";
 import bcrypt from "bcrypt";
-import { type CookieOptions } from "express";
 import crypto from "crypto";
 import { Resend } from "resend";
+import type { Request, Response, CookieOptions } from "express";
+
 
 export interface DbUser {
   id: string;
@@ -14,7 +16,7 @@ export interface DbUser {
   role: "user" | "admin";
 }
 
-const cookieOptions: CookieOptions = {
+const cookieOptions:CookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: "strict",
@@ -36,7 +38,7 @@ export const firstGet = (req: Request, res: Response) => {
   res.status(200).json({ message: "Welcome to auth route" });
 };
 
-export const authRegister = async (req: Request, res: Response) => {
+export const authRegister = async (req: Request, res:Response) => {
   const { email, username, password } = req.body;
 
   if (!email || !username || !password) {
@@ -269,7 +271,7 @@ export const getMessages = async (req: Request, res: Response) => {
   }
 };
 
-export const getUsers = async (req: Request, res: Response) => {
+export const getUsers = async (req: Request, res: Response):Promise<void> => {
   try {
     const result = await pool.query(
       `SELECT id, username, is_online, last_seen FROM users ORDER BY username ASC`
