@@ -37,6 +37,7 @@ socket.disconnect();
     } catch (error) {
       console.error(error);
     } finally {
+      localStorage.removeItem("user");
       set({ user: null, hasLoggedOut: true, });
     }
   },
