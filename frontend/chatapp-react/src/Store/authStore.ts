@@ -24,7 +24,7 @@ type AuthStore = {
 export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
   users: [],
-  isRestored: false,
+  isRestored: !!localStorage.getItem("user"),
   hasLoggedOut: false,
 
   setUser: (userData) => set({ user: userData }),
