@@ -16,7 +16,8 @@ export interface DbUser {
   role: "user" | "admin";
 }
 const isProd = process.env.NODE_ENV === "production";
-const cookieOptions:CookieOptions = {
+
+const cookieOptions: CookieOptions = {
   httpOnly: true,
   secure: isProd,
   sameSite: isProd ? "none" : "strict",
