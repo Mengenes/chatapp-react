@@ -66,6 +66,7 @@ socket.disconnect();
       const res = await axiosBaseurl.get("/user/me");
       set({ user: res.data ?? null, isRestored: true, hasLoggedOut: false });
     } catch {
+      localStorage.removeItem("user");
       set({ user: null, isRestored: true });
     }
   },
