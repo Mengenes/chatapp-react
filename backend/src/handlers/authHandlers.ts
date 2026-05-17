@@ -1,4 +1,3 @@
-
 import jwt from "jsonwebtoken";
 import type { JwtPayload } from "jsonwebtoken";
 import { pool } from "../configs/db.ts";
@@ -7,7 +6,6 @@ import crypto from "crypto";
 import { Resend } from "resend";
 import type { Request, Response, CookieOptions } from "express";
 
-
 export interface DbUser {
   id: string;
   email: string;
@@ -15,6 +13,7 @@ export interface DbUser {
   password: string;
   role: "user" | "admin";
 }
+
 const isProd = process.env.NODE_ENV === "production";
 
 const cookieOptions: CookieOptions = {
@@ -39,7 +38,7 @@ export const firstGet = (req: Request, res: Response) => {
   res.status(200).json({ message: "Welcome to auth route" });
 };
 
-export const authRegister = async (req: Request, res:Response) => {
+export const authRegister = async (req: Request, res: Response) => {
   const { email, username, password } = req.body;
 
   if (!email || !username || !password) {
@@ -191,8 +190,8 @@ export const forgotPassword = async (req: Request, res: Response) => {
 };
 
 export const logout = (req: Request, res: Response) => {
-  res.cookie("refreshToken", "", { httpOnly: true, expires: new Date(0) });
-  res.cookie("accessToken", "", { httpOnly: true, expires: new Date(0) });
+  res.clearCookie("refreshToken", cookieOptions);
+  res.clearCookie("accessToken", cookieOptions);
   return res.json({ message: "Logged out successfully" });
 };
 
@@ -272,7 +271,7 @@ export const getMessages = async (req: Request, res: Response) => {
   }
 };
 
-export const getUsers = async (req: Request, res: Response):Promise<void> => {
+export const getUsers = async (req: Request, res: Response): Promise<void> => {
   try {
     const result = await pool.query(
       `SELECT id, username, is_online, last_seen FROM users ORDER BY username ASC`
