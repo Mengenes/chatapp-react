@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import axiosBaseurl from "../configs/axios/AxiosBaseurl";
-import {socket} from '../../src/socket'
+import axiosBaseurl, { setSkipRefresh } from "../configs/axios/AxiosBaseurl";
+import { socket } from "../../src/socket";
+
 export type User = {
   id: string;
   username: string;
@@ -24,21 +25,21 @@ type AuthStore = {
 export const useAuthStore = create<AuthStore>((set) => ({
   user: null,
   users: [],
-  isRestored: !!localStorage.getItem("user"),
+  isRestored: false,
   hasLoggedOut: false,
 
   setUser: (userData) => set({ user: userData }),
 
   logout: async () => {
+    setSkipRefresh(true);
     try {
       await axiosBaseurl.post("/auth/logout");
       socket.removeAllListeners();
-socket.disconnect();
+      socket.disconnect();
     } catch (error) {
       console.error(error);
     } finally {
-      localStorage.removeItem("user");
-      set({ user: null, hasLoggedOut: true, });
+      set({ user: null, hasLoggedOut: true });
     }
   },
 
@@ -65,9 +66,9 @@ socket.disconnect();
   restoreUser: async () => {
     try {
       const res = await axiosBaseurl.get("/user/me");
+      setSkipRefresh(false);
       set({ user: res.data ?? null, isRestored: true, hasLoggedOut: false });
     } catch {
-      localStorage.removeItem("user");
       set({ user: null, isRestored: true });
     }
   },

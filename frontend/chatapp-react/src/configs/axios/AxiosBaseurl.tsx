@@ -1,16 +1,19 @@
-import axios, { type  AxiosRequestConfig } from "axios";
-
+import axios, { type AxiosRequestConfig } from "axios";
 
 interface RetryableRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;
 }
 
-
 let isRefreshing = false;
+let skipRefresh = false;
 let refreshQueue: Array<{
   resolve: () => void;
   reject: (err: unknown) => void;
 }> = [];
+
+export function setSkipRefresh(val: boolean) {
+  skipRefresh = val;
+}
 
 function flushQueue(error?: unknown) {
   refreshQueue.forEach(({ resolve, reject }) =>
@@ -26,11 +29,10 @@ const axiosBaseurl = axios.create({
 
 axiosBaseurl.interceptors.response.use(
   (response) => response,
-
   async (error) => {
     const originalRequest = error.config as RetryableRequestConfig;
 
-    if (error.response?.status !== 401 || originalRequest._retry) {
+    if (error.response?.status !== 401 || originalRequest._retry || skipRefresh) {
       return Promise.reject(error);
     }
 
