@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 import Profile from "../../Pages/Profile/Profile";
-
+import logo from "../../assets/bubble-speech_1768686.png"
 function Navbar() {
   const userData = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
@@ -16,8 +16,11 @@ function Navbar() {
           Home
         </Link>
       </div>
+  <div>
+<img src={logo} alt="Chatapp Logo" className="w-4 h-4 md:w-8 md:h-8 lg:w-10 lg:h-10"></img>
 
-      <div className="  flex flex-wrap  flex-1 items-center justify-end gap-4 ">
+  </div>
+      <div className="  flex flex-wrap   items-center justify-end gap-4 ">
         {userData ? (
           <>
             <p className="whitespace-nowrap">{userData.username}</p>

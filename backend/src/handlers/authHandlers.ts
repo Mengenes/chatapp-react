@@ -262,7 +262,7 @@ export const getMessages = async (req: Request, res: Response) => {
        FROM messages m
        JOIN users u ON u.id = m.user_id
        ORDER BY m.created_at ASC
-       LIMIT 100`
+       LIMIT 50`
     );
     return res.json(result.rows);
   } catch (err) {
