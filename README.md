@@ -7,7 +7,7 @@
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?logo=supabase&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)
 
-Orderino  is admin dashboard for managing product order CRUD operations with roles.
+A real-time chat application using WebSockets with roles and auth flow.
 
 ---
 
