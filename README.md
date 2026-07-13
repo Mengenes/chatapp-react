@@ -58,7 +58,6 @@ Update .env with your configuration:
 
 # Backend
 Supabase URL and API key
-
 Resend API key
 
 # Frontend
@@ -94,7 +93,7 @@ Repository Structure
 │       │   ├── /config            # Custom Config Files (axiosApiUrl)
 │       │   ├── /lib               # Config files (shadcn utils)
 │       │   ├── /store             # State Management Store (Zustand mainly)
-│       │   ├── /utils              # Protected Routes  Setup
+│       │   ├── /utils             # Protected Routes  Setup
 │       │   ├── App.tsx            # Main routing setup
 │       │   ├── index.css          # Main Tailwind/CSS file
 │       │   └── main.tsx           # React entry point
@@ -130,17 +129,17 @@ Built with Node.js + Express + Websocket
 Handles authentication, user messages  and database writes via Supabase
 
 Supabase  Tables
-Table	           Purpose
-users	           Stores user accounts
+Table	             Purpose
+users	             Stores user accounts
 password_resets    Stores password reset token and timestamp
 messages           Stores user messages with user id and timestamp
 
 
 Example API Endpoints
 Auth Routes
-Endpoint	       Method	Description
-/api/auth/register	POST	Register new user
-/api/auth/login	    POST	Log in user
+Endpoint	          Method	 Description
+/api/auth/register	 POST	  Register new user
+/api/auth/login	    POST	  Log in user
  
 
 Example Request:
@@ -150,9 +149,8 @@ POST /api/auth/login
  "username":"username",
  "password":"password"   
       }
-Example Response:
 
-POST /api/auth/login	
+Example Response:
 {
  "user":{
         "id":"userData.id",
