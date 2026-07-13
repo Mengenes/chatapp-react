@@ -183,6 +183,7 @@ Variable	     Description
 VITE_AXIOS_API_URL   Axios Base Route URL   
 VITE_SOCKETIO_BASEURL Axios Base SocketIO URL
 Versioning & Changelog
+
 Keep a CHANGELOG.md file documenting updates.
 
 Use Semantic Versioning (MAJOR.MINOR.PATCH):
