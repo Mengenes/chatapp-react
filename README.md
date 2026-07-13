@@ -45,7 +45,7 @@ A real-time chat application using WebSockets with roles and auth flow.
 
 **Clone the repository**
 ```bash
-git clone git@github.com:Mengenes/chatapp-react.git
+git clone git@github.com:<your-username>/chatapp-react.git
 Install Dependencies
 
 cd  chatapp-react/frontend/chatapp-react && pnpm install
