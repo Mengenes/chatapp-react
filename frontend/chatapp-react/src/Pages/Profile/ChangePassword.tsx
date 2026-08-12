@@ -40,11 +40,8 @@ function ChangePassword() {
 
   return (
     <Dialog>
-      <DialogTrigger >
-        <Button variant="outline" className="text-xs sm:text-sm">
-          Change Password
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger  render={<Button variant="outline" className="text-xs sm:text-sm">Change Password</Button>} />
+    
 
       <DialogContent className="w-[92vw] sm:max-w-sm">
         <DialogHeader>

@@ -38,9 +38,9 @@ function Profile() {
 
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button variant="outline" className='bg-primary border-0 hover:bg-primary hover'>Profile</Button>
-      </DialogTrigger>
+      <DialogTrigger  render={ <Button variant="outline" className='bg-primary border-0 hover:bg-primary hover'>Profile</Button>} />
+      
+       
 
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>

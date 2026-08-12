@@ -40,11 +40,8 @@ function ChangeUsername() {
 
   return (
     <Dialog>
-      <DialogTrigger >
-        <Button variant="outline" className="text-xs sm:text-sm">
-          Change Username
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger  render= {<Button variant="outline" className="text-xs sm:text-sm">Change Username</Button>} />
+      
 
       <DialogContent className="w-[92vw] sm:max-w-sm">
         <DialogHeader>

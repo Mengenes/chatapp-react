@@ -17,7 +17,7 @@ function ChatSkeleton() {
             </h3>
 
             <div className="p-2 space-y-2 animate-pulse">
-              {Array.from({ length: 12 }).map((_, i) => (
+              {Array.from({ length: 6 }).map((_, i) => (
                 <div
                   key={i}
                   className="flex items-center justify-between border p-3 hover:bg-gray-200"

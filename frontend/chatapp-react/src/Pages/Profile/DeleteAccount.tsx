@@ -39,11 +39,8 @@ function DeleteAccount() {
 
   return (
     <Dialog>
-      <DialogTrigger >
-        <Button variant="destructive" className="text-xs sm:text-sm">
-          Delete Account
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger render={<Button variant="destructive" className="text-xs sm:text-sm">Delete Account</Button>} />
+    
 
       <DialogContent className="w-[92vw] sm:max-w-sm">
         <DialogHeader>
